@@ -1,21 +1,54 @@
-import reqwest from 'reqwest'
 import mainHTML from './text/main.html!text'
-import share from './lib/share'
+import { requestAnimationFrame, cancelAnimationFrame } from './lib/raf';
+import {csv as d3_csv} from 'd3-request';
+import PollutionChart from './components/PollutionChart';
 
-var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
+import {
+    REGIONS
+} from './lib/data';
 
 export function init(el, context, config, mediator) {
     el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
 
-    reqwest({
-        url: 'http://ip.jsontest.com/',
-        type: 'json',
-        crossOrigin: true,
-        success: (resp) => el.querySelector('.test-msg').innerHTML = `Your IP address is ${resp.ip}`
-    });
+   let frameRequest = requestAnimationFrame(function checkInnerHTML(time) {
+        //console.log(time)
+        
+        if(el && el.getBoundingClientRect().height) {
+            cancelAnimationFrame(checkInnerHTML);
 
-    [].slice.apply(el.querySelectorAll('.interactive-share')).forEach(shareEl => {
-        var network = shareEl.getAttribute('data-network');
-        shareEl.addEventListener('click',() => shareFn(network));
+            d3_csv(config.assetPath+"/assets/data/pollution_geolocated.csv",(d)=>{
+
+                d.pm10=+d.pm10;
+                d.pm25=+d.pm25;
+
+                d.lon=+d.lon;
+                d.lat=(+d.lat);
+
+                return d;
+            },(__data)=>{
+
+                
+                console.log(__data)
+                
+                new PollutionChart(__data
+                    .filter(d=>{
+                        return REGIONS[d.Region]==="europe";
+                    })
+                    .sort((a,b)=>{
+                        return a.pm10 - b.pm10;
+                    }).map((d,i)=>{
+                        d.index=i;
+                        return d;
+                    }),{
+                        container:el.querySelector(".interactive-container"),
+                        config:config
+                    });  
+
+            })
+
+            
+            return; 
+        }
+        frameRequest = requestAnimationFrame(checkInnerHTML);
     });
 }

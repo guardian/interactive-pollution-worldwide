@@ -3,3 +3,26 @@
 @function colour($name) {
     @return map-get($pasteup-palette, $name);
 }
+
+$africa:#7d7569;
+$europe:#507892;
+$oceania:#72af7e;
+$namerica:#a60947;
+$samerica:#ff5b3a;
+$americas:#ff5b3a;
+$asia:#ffce4b;
+$middle_east:#ff0000;
+
+$countries-list: africa, europe, oceania, namerica, samerica, americas, asia;
+$colors-list: $africa, $europe, $oceania, $namerica, $samerica, $americas, $asia;
+
+@each $current-color in $colors-list {
+    $i: index($colors-list, $current-color);
+
+	div.city {
+		div.dot.#{nth($countries-list, $i)} {
+			background-color:$current-color;
+		}
+	}
+
+}
