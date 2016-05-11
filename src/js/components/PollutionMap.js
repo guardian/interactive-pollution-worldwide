@@ -14,6 +14,8 @@ import { requestAnimationFrame, cancelAnimationFrame } from '../lib/raf';
 
 export default function PollutionMap(data,options) {
 
+	console.log("L",data.length)
+
 	var π = Math.PI;
 	function kavrayskiy7(λ, φ) {
 	  return [
@@ -47,14 +49,23 @@ export default function PollutionMap(data,options) {
 	//     .center([0,0])
 	//     .rotate([-96.75,-29.04])
 
-	var projection = d3.geo.mercator()
-	    .scale(700)
+	// var projection = d3.geo.mercator()
+	//     .scale(700)
+	//     .translate([width / 2, height / 2])
+	//     //.clipAngle(180 - 1e-4)
+ //    	//.clipExtent([[0, 0], [width, height]])
+	//     .precision(.1)
+	//     .center([0,51])
+	//     //.rotate([-75,-30])
+
+	var projection = d3.geo.kavrayskiy7()
+	    .scale(170)
 	    .translate([width / 2, height / 2])
 	    //.clipAngle(180 - 1e-4)
     	//.clipExtent([[0, 0], [width, height]])
 	    .precision(.1)
-	    .center([0,51])
-	    //.rotate([-75,-30])
+	    //.center([0,0])
+	    //.rotate([-96.75,-29.04])
 
 	var path = d3.geo.path()
 	    .projection(projection);
@@ -99,7 +110,7 @@ export default function PollutionMap(data,options) {
 					    .attr("transform", function(d) { return "translate(" + projection([d.lon,d.lat]) + ")"; })
 	let extents={};
 	setExtents();
-	let radius=d3.scale.sqrt().domain(extents[options.indicator]).range([0.5,7])
+	let radius=d3.scale.sqrt().domain(extents[options.indicator]).range([0.5,10])
 
 	place.append("circle")
 		.classed("only-stroke",d=>(radius(d[options.indicator])>1))
