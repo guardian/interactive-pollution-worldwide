@@ -38,14 +38,23 @@ export default function PollutionMap(data,options) {
 	var width = 960,
     	height = 570;
 
-	var projection = d3.geo.azimuthalEquidistant()
-	    .scale(560)
+	// var projection = d3.geo.azimuthalEquidistant()
+	//     .scale(560)
+	//     .translate([width / 2, height / 2])
+	//     //.clipAngle(180 - 1e-4)
+ //    	//.clipExtent([[0, 0], [width, height]])
+	//     .precision(.1)
+	//     .center([0,0])
+	//     .rotate([-96.75,-29.04])
+
+	var projection = d3.geo.mercator()
+	    .scale(700)
 	    .translate([width / 2, height / 2])
 	    //.clipAngle(180 - 1e-4)
     	//.clipExtent([[0, 0], [width, height]])
 	    .precision(.1)
-	    .center([0,0])
-	    .rotate([-96.75,-29.04])
+	    .center([0,51])
+	    //.rotate([-75,-30])
 
 	var path = d3.geo.path()
 	    .projection(projection);
@@ -85,12 +94,12 @@ export default function PollutionMap(data,options) {
 					    	if(!REGION_COUNTRY[d.Country]) {
 					    		console.log(d.Country)
 					    	}
-					    	return "place "+REGION_COUNTRY[d.Country]+" "+d.City
+					    	return "place "+REGION_COUNTRY[d.Country]+" "+d.City+":"+d[options.indicator]
 					    })
 					    .attr("transform", function(d) { return "translate(" + projection([d.lon,d.lat]) + ")"; })
 	let extents={};
 	setExtents();
-	let radius=d3.scale.sqrt().domain(extents[options.indicator]).range([0.5,20])
+	let radius=d3.scale.sqrt().domain(extents[options.indicator]).range([0.5,7])
 
 	place.append("circle")
 		.classed("only-stroke",d=>(radius(d[options.indicator])>1))
