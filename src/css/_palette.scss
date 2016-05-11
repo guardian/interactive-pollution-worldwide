@@ -10,19 +10,29 @@ $oceania:#72af7e;
 $namerica:#a60947;
 $samerica:#ff5b3a;
 $americas:#ff5b3a;
-$asia:#ffce4b;
-$middle_east:#ff0000;
+$asia:#ffcc4b;
+$middle_east:#ff9b0b;
 
-$countries-list: africa, europe, oceania, namerica, samerica, americas, asia;
-$colors-list: $africa, $europe, $oceania, $namerica, $samerica, $americas, $asia;
+$countries-list: africa, europe, oceania, namerica, samerica, americas, asia, middle_east;
+$colors-list: $africa, $europe, $oceania, $namerica, $samerica, $americas, $asia, $middle_east;
 
 @each $current-color in $colors-list {
     $i: index($colors-list, $current-color);
 
-	div.city {
-		div.dot.#{nth($countries-list, $i)} {
-			background-color:$current-color;
+	g.city.#{nth($countries-list, $i)} {
+		rect {
+			fill:$current-color;
 		}
 	}
-
+	
+	g.place.#{nth($countries-list, $i)} {
+		circle {
+			fill:$current-color;
+			stroke:none;
+			&.only-stroke {
+				//fill:none;
+				stroke:$current-color;
+			}
+		}
+	}
 }

@@ -1,27 +1,37 @@
 .pollution {
+	
+	float:left;
 
 	width:100%;
-	height:200px;
+	height:300px;
 	position: relative;
 	
-	$w:4px;
+	@include mq(tablet) {
+		width:calc(100% / 7);
+	}
 
-	div.city {
-		position: absolute;
-		div.dot {
-			position: absolute;
-			width:$w;
-			height:$w;
-			left:-$w/2;
-			top:-$w/2;
-			//background-color: #333;
-			border-radius:$w/2;
-		}
-		span {
-			@include fs-textSans(1);
-			font-size:11px;
-			color:#767676;
-			visibility: hidden;
+	$w:4px;
+	
+	svg {
+		g.city {
+			rect {
+				shape-rendering: crispEdges;
+				stroke:none;
+				//fill:#333;
+			}
+			text {
+				@include fs-textSans(1);
+				color:#767676;
+				visibility: hidden;
+				&.right {
+					text-anchor:end;
+				}
+			}
+			&:hover {
+				text {
+					visibility: visible;	
+				}
+			}
 		}
 	}
 
