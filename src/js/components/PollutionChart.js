@@ -15,6 +15,10 @@ import {
 } from 'd3-scale';
 
 import {
+	axisLeft
+} from 'd3-axis';
+
+import {
 	REGIONS,
 	REGION_COUNTRY
 } from '../lib/data';
@@ -75,6 +79,8 @@ export default function PollutionChart(data,options) {
 		colorscale.domain([0,extents[options.indicator][1]]).range([1,0]);
 
 
+
+
 		let city=svg.append("g")
 					.attr("id","cities")
 					.attr("transform",`translate(${(margins.left + padding.left)},${margins.top+padding.top})`)
@@ -93,7 +99,10 @@ export default function PollutionChart(data,options) {
 								y=yscale(d[options.indicator]);
 							return `translate(${x},${y})`
 						})
-						
+		
+		let axes = svg.append("g")
+            .attr("class", "axes")
+            .attr("transform", "translate(" + (margins.left + padding.left) + "," + margins.top + ")");
 
 		// city.append("circle")
 		// 		.attr("cx",0)
@@ -115,6 +124,46 @@ export default function PollutionChart(data,options) {
 				.attr("x",0)
 				.attr("y",-3)
 				.text(d=>(d.City+" "+d.Country))
+
+		let yAxis = axisLeft(yscale)
+            //.scale(yscales.up)
+            //.orient("left")
+            //.ticks(options.indicator.ticks || 5)
+            //.tickValues((d,i) => {})
+            .ticks(options.ticks || 5)
+            /*.tickValues(()=>{
+						return ([0]).concat(yscale.ticks(2))
+					})*/
+            // .tickFormat((d) => {
+            //     //if(!d) return "";
+            //     return format("+,.0%")(d);
+            // })
+
+
+        let yaxis = axes.append("g")
+            .attr("class", "y axis left")
+            //.classed("hidden",!options.first)
+            //.classed("hidden",!options.axis.x)
+            .attr("transform", "translate(" + (-padding.left) + "," + 0 + ")")
+            .call(yAxis);
+
+        yaxis.selectAll(".tick")
+            .filter((d, i) => d !== 0)
+            .classed("left", true)
+            .select("line")
+            .attr("x1", (d, i) => {
+                return -padding.left
+            })
+            .attr("x2", (d, i) => {
+                return xscale.range()[1] + padding.left
+            })
+
+        yaxis.selectAll(".tick")
+            .select("text")
+            .attr("x", 0)
+            .attr("y", -6)
+        //.attr("dy","0.6em")
+					
 
 	}
 

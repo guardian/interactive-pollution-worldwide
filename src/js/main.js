@@ -62,60 +62,60 @@ export function init(el, context, config, mediator) {
                     index:d3_extent(__data,d=>d.index)
                 }
 
-                let indicator="pm25"
+                let indicator="pm10"
 
-                // REGION_NAMES.forEach(r=>{
+                REGION_NAMES.forEach(r=>{
 
-                //     let seen=[];
+                    let seen=[];
 
-                //     let data=__data
-                //         .filter(d=>{
-                //             return REGION_COUNTRY[d.Country]===r;
-                //         })
-                //         .filter(d=>{
-                //             return 1;
-                //             if(seen.indexOf(d[indicator])===-1){
-                //                 seen.push(d[indicator]);
-                //                 return true;
-                //             }
-                //             return false;
-                //         })
+                    let data=__data
+                        .filter(d=>{
+                            return REGION_COUNTRY[d.Country]===r;
+                        })
+                        .filter(d=>{
+                            return 1;
+                            if(seen.indexOf(d[indicator])===-1){
+                                seen.push(d[indicator]);
+                                return true;
+                            }
+                            return false;
+                        })
 
-                //     new PollutionChart(data
-                //         .sort((a,b)=>{
-                //             return a[indicator] - b[indicator];
-                //         }).map((d,i)=>{
-                //             d.index=i;
-                //             return d;
-                //         }),{
-                //             container:el.querySelector(".interactive-container"),
-                //             config:config,
-                //             extents:extents,
-                //             indicator:indicator,
-                //             total_length:length
-                //         }); 
-                // })
-                 
-                
-                d3_json(config.assetPath+"/assets/data/world-50m.json",function(error,world){
-
-                    console.log(world)
-
-                    new PollutionMap(__data.filter(d=>{
-                                //return d.pm25>25;
-                                //return 1;
-                                return d.Country==="United Kingdom";
-                                return REGION_COUNTRY[d.Country]==="asia";
-                         }).sort((a,b)=>{
-                            return a[indicator]-b[indicator]
-                         }),{
-                            world:world,
+                    new PollutionChart(data
+                        .sort((a,b)=>{
+                            return a[indicator] - b[indicator];
+                        }).map((d,i)=>{
+                            d.index=i;
+                            return d;
+                        }),{
                             container:el.querySelector(".interactive-container"),
                             config:config,
-                            indicator:indicator
-                    })
-
+                            extents:extents,
+                            indicator:indicator,
+                            total_length:length
+                        }); 
                 })
+                 
+                
+                // d3_json(config.assetPath+"/assets/data/world-50m.json",function(error,world){
+
+                //     console.log(world)
+
+                //     new PollutionMap(__data.filter(d=>{
+                //                 //return d.pm25>25;
+                //                 //return 1;
+                //                 return d.Country==="United Kingdom";
+                //                 return REGION_COUNTRY[d.Country]==="asia";
+                //          }).sort((a,b)=>{
+                //             return a[indicator]-b[indicator]
+                //          }),{
+                //             world:world,
+                //             container:el.querySelector(".interactive-container"),
+                //             config:config,
+                //             indicator:indicator
+                //     })
+
+                // })
 
                 
 

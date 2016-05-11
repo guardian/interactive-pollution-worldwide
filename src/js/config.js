@@ -15,12 +15,13 @@ System.config({
   map: {
     "d3": "npm:d3@3.5.17",
     "d3-array": "npm:d3-array@0.7.1",
+    "d3-axis": "npm:d3-axis@0.3.1",
     "d3-collection": "npm:d3-collection@0.1.2",
     "d3-geo": "npm:d3-geo@0.0.1",
     "d3-geo-projection": "npm:d3-geo-projection@0.2.16",
     "d3-request": "npm:d3-request@0.4.6",
     "d3-scale": "npm:d3-scale@0.7.0",
-    "d3-selection": "npm:d3-selection@0.7.1",
+    "d3-selection": "npm:d3-selection@0.7.2",
     "guardian/iframe-messenger": "github:guardian/iframe-messenger@master",
     "json": "github:systemjs/plugin-json@0.1.2",
     "reqwest": "github:ded/reqwest@1.1.5",
@@ -109,6 +110,11 @@ System.config({
     "npm:core-util-is@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
+    "npm:d3-axis@0.3.1": {
+      "d3-scale": "npm:d3-scale@0.7.0",
+      "d3-selection": "npm:d3-selection@0.7.2",
+      "d3-transition": "npm:d3-transition@0.2.8"
+    },
     "npm:d3-dsv@0.3.2": {
       "rw": "npm:rw@1.3.2"
     },
@@ -137,6 +143,14 @@ System.config({
     },
     "npm:d3-time-format@0.3.2": {
       "d3-time": "npm:d3-time@0.2.5"
+    },
+    "npm:d3-transition@0.2.8": {
+      "d3-color": "npm:d3-color@0.4.2",
+      "d3-dispatch": "npm:d3-dispatch@0.4.3",
+      "d3-ease": "npm:d3-ease@0.7.0",
+      "d3-interpolate": "npm:d3-interpolate@0.7.0",
+      "d3-selection": "npm:d3-selection@0.7.2",
+      "d3-timer": "npm:d3-timer@0.4.3"
     },
     "npm:duplexer2@0.0.2": {
       "readable-stream": "npm:readable-stream@1.1.14"

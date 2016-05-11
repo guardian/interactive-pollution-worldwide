@@ -1,0 +1,138 @@
+.axes {
+	path,line {
+		shape-rendering: crispEdges;
+	}
+	.axis {
+
+		&.hidden {
+			.tick {
+				text {
+					visibility: hidden;		
+				}
+				line {
+					visibility: hidden;
+				}
+			}
+			
+		}
+
+		path,line {
+			fill:none;
+			stroke:#bbb;
+		}
+		line.zero {
+			//stroke-dasharray:1,1;
+		}
+		path {
+			//display: none;
+		}
+		
+		&.x,
+		&.y {
+			path {
+				//display: none;
+			}
+		}
+
+		.tick {
+			&.hidden {
+				visibility: hidden;
+			}
+			line {
+				//display: none;
+			}
+			text {
+				//display: none;
+			}
+		}
+
+		&.y {
+			line.zero {
+				stroke:#bbb;
+				stroke-width:2;
+			}
+			.tick {
+				line {
+					stroke:#ddd;
+					stroke-dasharray: 1,1;
+					//visibility: hidden;
+					&.visible {
+						visibility: visible;
+					}
+					&.hidden {
+						visibility: hidden;
+					}
+				}
+				text {
+					text-anchor:end !important;
+				}
+				&.left {
+					text {
+						text-anchor:start !important;
+					}
+				}
+				&.right {
+					text {
+						text-anchor:end !important;
+					}	
+				}
+				
+			}
+			path {
+				visibility: hidden;
+			}
+		}
+		&.x {
+			line {
+				stroke:#bbb;
+			}
+			line.zero {
+				stroke:#bbb;
+			}
+			text {
+				text-anchor:start !important;
+			}
+			
+			.tick:first-child {
+				text {
+					text-anchor:start !important;
+				}
+			}
+			.tick:nth-last-child(2) {
+				text {
+					text-anchor:end !important;
+				}
+			}
+			.tick {
+				line {
+					display: none;
+					stroke:#ddd;
+					stroke-dasharray: 1,1;
+				}
+			}
+			path {
+				visibility: hidden;
+			}
+		}
+
+		text {
+			fill: #b3b3b4;
+			@include fs-textSans(1);
+			font-size: 12px;
+			@include mq(tablet) {
+				font-size: 13px;
+			}
+			text-anchor:middle;
+		}
+		.tick.last-tick {
+			text {
+				text-anchor:start !important;
+			}
+		}
+		
+	}
+	line.zero {
+		stroke:#999;
+		stroke-width:1;
+	}
+}
